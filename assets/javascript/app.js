@@ -19,13 +19,13 @@ $(document).ready(function() {
       `
       <p>Lyric: ${questions[0]} </p>
       
-      <input type="radio" id="q1a1" name="question1" />
+      <input type="radio" id="q1a1" name="question1" value="${answers1[0]}" />
         <label for="q1a1"><span>${answers1[0]}</span></label>
 
-      <input type="radio" id="q1a2" name="question1" />
+      <input type="radio" id="q1a2" name="question1" value="${answers1[1]}"/>
         <label for="q1a2"><span>${answers1[1]}</span></label>
 
-      <input type="radio" id="q1a3" name="question1" />
+      <input type="radio" id="q1a3" name="question1" value="${answers1[2]}"/>
         <label for="q1a3"><span>${answers1[2]}</span></label>
 
       <br>
@@ -37,17 +37,22 @@ $(document).ready(function() {
 
     });
 
-    //logic here for either selecting the correct or incorrect answer and updating the appropriate counter.
-    if ($("span").val() === answers1[1]) {
-      correctAnswers++;
-    } else {
-      incorrectAnswers++;
-    }
-
-    console.log(correctAnswers);
 
 //click the submission button to show results
       $("#done-button").on("click", function(){
+
+        //logic here for either selecting the correct or incorrect answer and updating the appropriate counter.
+
+        if ($("input:radio[name ='question1']:checked").val() === answers1[1]) {
+          correctAnswers++;
+        } else {
+          incorrectAnswers++;
+        }
+    
+        // console.log($("input:radio[name ='question1']:checked").val());
+        // console.log(answers1[1]);
+       
+        // show the results of the trivia game
 
         $("#results").append(
           `
