@@ -4,16 +4,16 @@ var incorrectAnswers = 0;
 var totalAnswers = correctAnswers + incorrectAnswers;
 var unanswered = 0;
 
-var questions = ["Cash rules everything around me: CREAM. Get the money.  Dolla dolla bill y'all!", "Spit your game, talk your sh*t, grab your gat, call your clique.", "I see I said, jealousy I said. Got the whole industry mad at me I said","And since birth I've been cursed with this curse to just curse, and just blurt this berserk and bizzare sh*t that works...", "Out on bail, fresh outta jail. California Dreamin.  Soon as I step on the stage I'm hearin hoochies screamin."];
+var questions = ["Cash rules everything around me: CREAM. Get the money.  Dolla dolla bill y'all!", "Spit your game, talk your sh*t, grab your gat, call your clique.", "I see I said, jealousy I said. Got the whole industry mad at me I said", "And since birth I've been cursed with this curse to just curse, and just blurt this berserk and bizzare sh*t that works...", "Out on bail, fresh outta jail. California Dreamin.  Soon as I step on the stage I'm hearin hoochies screamin."];
 
 var answers1 = ["EPMD", "Wu Tang Clan", "KRS One"];
 var answers2 = ["Notorious BIG", "Dr Dre", "Boosie Bad Ass"];
 var answers3 = ["Lil Wayne", "50 Cent", "Jay Z"];
 var answers4 = ["Logic", "Drake", "Eminem"];
 var answers5 = ["2Pac", "Eazy E", "Kendrick Lamar"];
-
+var timer;
 //ready the document
-$(document).ready(function() {
+$(document).ready(function () {
 
   //clicking the start button sends us to the trivia questions AND begins the timer
   $("#start-button").on("click", function createQuestions() {
@@ -87,93 +87,93 @@ $(document).ready(function() {
       
             <br>
       `
-      );
+    );
 
-      //generate the submission button      
-      $("#done-button").html(`<button>SUBMIT</button>`);
+    //generate the submission button      
+    $("#done-button").html(`<button>SUBMIT</button>`);
 
 
-      //create a countdown timer that submits the results once at 0
-      var n = 30;
-      setTimeout(countDown, 1000);
+    //create a countdown timer that submits the results once at 0
+    var n = 30;
+    countDown();
 
-        function countDown () {
+    function countDown() {
+      if (n > 0) {
+         timer = setTimeout(function () {
           n--;
-          if (n > 0) {
-            setTimeout(countDown, 1000);
-          } else {
-            results();
-          }
-          
-          console.log(n);
-        }
-
-    });
-
-
-      $("#done-button").on("click",submitAnswers());
-      
-      //function for answer submission logic
-      function submitAnswers() {
-      console.log(this);
-
-
-        //logic here for either selecting the correct or incorrect answer and updating the appropriate counter.
-
-        if ($("input:radio[name ='question1']:checked").val() === answers1[1]) {
-          correctAnswers++;
-        } else if ($("input:radio[name ='question1']:checked").val() === answers1[0] || $("input:radio[name ='question1']:checked").val() === answers1[2]) {
-          incorrectAnswers++;
-        }
-
-        if ($("input:radio[name ='question2']:checked").val() === answers2[0]) {
-          correctAnswers++;
-        } else if ($("input:radio[name ='question2']:checked").val() === answers2[1] || $("input:radio[name ='question2']:checked").val() === answers2[2]) {
-          incorrectAnswers++;
-        }
-
-        if ($("input:radio[name ='question3']:checked").val() === answers3[2]) {
-          correctAnswers++;
-        } else  if ($("input:radio[name ='question3']:checked").val() === answers3[0] || $("input:radio[name ='question3']:checked").val() === answers3[1]) {
-          incorrectAnswers++;
-        }
-
-        if ($("input:radio[name ='question4']:checked").val() === answers4[2]) {
-          correctAnswers++;
-        } else if ($("input:radio[name ='question4']:checked").val() === answers4[0] || $("input:radio[name ='question4']:checked").val() === answers1[1]) {
-          incorrectAnswers++;
-        }
-
-        if ($("input:radio[name ='question5']:checked").val() === answers5[0]) {
-          correctAnswers++;
-        } else if ($("input:radio[name ='question5']:checked").val() === answers5[1] || $("input:radio[name ='question5']:checked").val() === answers5[2]) {
-          incorrectAnswers++;
-        }
-        
-        
-
-        //creating logic for unanswered questions
-        if (totalAnswers === 5) {
-          unanswered = 0;
-        } else {
-          unanswered = 5 - totalAnswers;
-        } 
+          countDown();
+        }, 1000);
+      } else {
         results();
-      } 
-      
+      }
+      console.log(n);
+      $("#timer").html("Time Left: " + n);
+    }
+  });
 
-      function results() {
-        // show the results of the trivia game
-        //hide the questions and submission button        
-        $("#questions").hide();
-        $("#done-button").hide();
 
-        $("#results").append(
-          `
+  //function for answer submission logic
+  $("#done-button").on("click", function () {
+    console.log(this);
+    // clearInterval(timer);
+    clearTimeout(timer);
+    //logic here for either selecting the correct or incorrect answer and updating the appropriate counter.
+
+    if ($("input:radio[name ='question1']:checked").val() === answers1[1]) {
+      correctAnswers++;
+    } else if ($("input:radio[name ='question1']:checked").val() === answers1[0] || $("input:radio[name ='question1']:checked").val() === answers1[2]) {
+      incorrectAnswers++;
+    }
+
+    if ($("input:radio[name ='question2']:checked").val() === answers2[0]) {
+      correctAnswers++;
+    } else if ($("input:radio[name ='question2']:checked").val() === answers2[1] || $("input:radio[name ='question2']:checked").val() === answers2[2]) {
+      incorrectAnswers++;
+    }
+
+    if ($("input:radio[name ='question3']:checked").val() === answers3[2]) {
+      correctAnswers++;
+    } else if ($("input:radio[name ='question3']:checked").val() === answers3[0] || $("input:radio[name ='question3']:checked").val() === answers3[1]) {
+      incorrectAnswers++;
+    }
+
+    if ($("input:radio[name ='question4']:checked").val() === answers4[2]) {
+      correctAnswers++;
+    } else if ($("input:radio[name ='question4']:checked").val() === answers4[0] || $("input:radio[name ='question4']:checked").val() === answers1[1]) {
+      incorrectAnswers++;
+    }
+
+    if ($("input:radio[name ='question5']:checked").val() === answers5[0]) {
+      correctAnswers++;
+    } else if ($("input:radio[name ='question5']:checked").val() === answers5[1] || $("input:radio[name ='question5']:checked").val() === answers5[2]) {
+      incorrectAnswers++;
+    }
+    totalAnswers = correctAnswers + incorrectAnswers;
+
+    //creating logic for unanswered questions
+    if (totalAnswers === 5) {
+      unanswered = 0;
+    } else {
+      unanswered = 5 - totalAnswers;
+    }
+
+    //calls the results function
+    results();
+  });
+
+
+  function results() {
+    // show the results of the trivia game
+    //hide the questions and submission button        
+    $("#questions").hide();
+    $("#done-button").hide();
+
+    $("#results").append(
+      `
           <p>Correct Answers: ${correctAnswers}</p>
           <p>Incorrect Answers: ${incorrectAnswers}</p>
           <p>Unanswered Questions: ${unanswered}</p> 
           `
-        )
-      }
-  });
+    )
+  }
+});
